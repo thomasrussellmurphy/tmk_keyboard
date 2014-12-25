@@ -48,10 +48,16 @@ TOP_DIR = ../..
 TARGET_DIR = .
 
 # project specific files
-SRC =	keymap.c \
+SRC =	keymap_common.c \
 	matrix.c \
 	led.c \
 	adb.c
+
+ifdef KEYMAP
+    SRC := keymap_$(KEYMAP).c $(SRC)
+else
+    SRC := keymap_ansi.c $(SRC)
+endif
 
 CONFIG_H = config.h
 
@@ -116,6 +122,7 @@ OPT_DEFS += -DBOOTLOADER_SIZE=4096
 #COMMAND_ENABLE = yes    # Commands for debug and configuration
 #SLEEP_LED_ENABLE = yes  # Breathing sleep LED during USB suspend
 NKRO_ENABLE = yes	# USB Nkey Rollover - not yet supported in LUFA
+
 
 
 # Optimize size but this may cause error "relocation truncated to fit"
